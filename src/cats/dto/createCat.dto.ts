@@ -3,11 +3,8 @@ import { IsNumberString, IsNumber, IsString } from 'class-validator';
 
 export class CreateCatDto {
   @IsString()
-  name: string;
-
-  @IsNumber()
-  age: number;
+  firstName: string;
 
   @IsString()
-  breed: string;
+  lastName: string;
 }

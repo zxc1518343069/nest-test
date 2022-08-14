@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CatsService } from './cats.service';
-import { CreateCatDto } from './create-cat.dto';
+import { CreateCatDto } from './dto/createCat.dto';
+import { Cat } from './entities/cat.entity';
 
 @Controller('cats')
 export class CatsController {
@@ -13,27 +14,18 @@ export class CatsController {
   }
 
   @Get('findAll')
-  async findAll(): Promise<CreateCatDto[]> {
+  findAll(): Promise<Cat[]> {
     return this.catsService.findAll();
   }
 
-  // 路由参数的两种方式
-  @Get('/find/:id')
-  findOne(@Param() params): string {
-    console.log(params);
-    return `This action returns a #${params.id} cat`;
-  }
-
-  @Get('/find2/:id')
-  findOne2(@Param('id') id: string): string {
-    console.log(id);
-    return `This action returns a #${id} cat`;
+  @Get('find')
+  find(@Body() createCatDto: CreateCatDto) {
+    return this.catsService.find(createCatDto);
   }
 
   @Post('create')
   async create(@Body() createCatDto: CreateCatDto) {
-    console.log(createCatDto);
-    this.catsService.create(createCatDto);
-    return '创建成功';
+    const res = await this.catsService.create(createCatDto);
+    return res;
   }
 }
