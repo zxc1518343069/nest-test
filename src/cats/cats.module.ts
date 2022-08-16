@@ -9,5 +9,6 @@ import { Cat } from './entities/cat.entity';
   providers: [CatsService],
   exports: [CatsModule],
   imports: [TypeOrmModule.forFeature([Cat])],
+  // 需要让 typeorm 知道这个子模块实体
 })
 export class CatsModule {}

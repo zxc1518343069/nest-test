@@ -31,6 +31,7 @@ export class CatsController {
 
   @Get('find')
   find(@Body() createCatDto: CreateCatDto) {
+    console.log(createCatDto instanceof CreateCatDto) // 不设置transform 为false
     return this.catsService.find(createCatDto);
   }
 

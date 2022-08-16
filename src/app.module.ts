@@ -14,8 +14,8 @@ import { Cat } from './cats/entities/cat.entity';
       username: 'root',
       password: '123456',
       database: 'nest',
-      entities: [],
-      // synchronize: true, // 每次启动的时候自动创建数据库 会导致数据丢失
+      // entities: [],
+      synchronize: true, // 每次启动的时候自动创建数据库 会导致数据丢失
       autoLoadEntities: true, // 自动加载
     }),
     CatsModule,
