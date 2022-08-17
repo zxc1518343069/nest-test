@@ -10,7 +10,7 @@ async function bootstrap() {
     new ValidationPipe({
       whitelist: true, // 排除除了entity的参数
       // forbidNonWhitelisted:true, // 出现其他参数外报错
-      // transform:true // 把请求参数 转换成entity 实例
+      transform: true, // 把请求参数 转换成entity 实例
       // 或者把参数转换成想要的类型 比如 id string body设置的number 则转换成number
       // 对 性能有轻微影响
     }),

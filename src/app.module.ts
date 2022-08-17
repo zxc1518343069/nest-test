@@ -1,10 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { CatsModule } from './cats/cats.module';
-import { Cat } from './cats/entities/cat.entity';
-
+import { CoffeesModule } from './coffees/coffees.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -19,8 +16,9 @@ import { Cat } from './cats/entities/cat.entity';
       autoLoadEntities: true, // 自动加载
     }),
     CatsModule,
+    CoffeesModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
