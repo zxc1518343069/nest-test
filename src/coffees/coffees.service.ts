@@ -15,9 +15,9 @@ export class CoffeesService {
     private readonly flavorRepository: Repository<Flavour>,
   ) {}
 
-  findAll() {
+  async findAll() {
     // 用于指定关系，否则将不会返回对应属性
-    return this.coffeeRepository.find({
+    return await this.coffeeRepository.find({
       relations: ['flavours'],
     });
   }
@@ -50,10 +50,13 @@ export class CoffeesService {
 
   async update(id: string, updateCoffeeDto: UpdateCoffeeDto) {
     const flavours =
-      updateCoffeeDto.flavours &&
-      (await Promise.all(
-        updateCoffeeDto.flavours.map((name) => this.preloadFlavourByName(name)),
-      ));
+      (updateCoffeeDto.flavours &&
+        (await Promise.all(
+          updateCoffeeDto.flavours.map((name) =>
+            this.preloadFlavourByName(name),
+          ),
+        ))) ??
+      [];
     const coffee = await this.coffeeRepository.preload({
       id: +id,
       ...updateCoffeeDto,
