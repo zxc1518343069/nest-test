@@ -13,6 +13,10 @@ async function bootstrap() {
       transform: true, // 把请求参数 转换成entity 实例
       // 或者把参数转换成想要的类型 比如 id string body设置的number 则转换成number
       // 对 性能有轻微影响
+      transformOptions: {
+        // https://github.com/typestack/class-transformer 参考
+        enableImplicitConversion: true, // 启用隐式类型转换
+      },
     }),
   );
   app.useGlobalInterceptors(new TransformInterceptor());

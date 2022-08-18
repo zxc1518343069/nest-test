@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
 import { Repository } from 'typeorm';
 import { CreateCoffeeDto } from './dto/create-coffee.dto';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto';
@@ -15,10 +16,14 @@ export class CoffeesService {
     private readonly flavorRepository: Repository<Flavour>,
   ) {}
 
-  async findAll() {
-    // 用于指定关系，否则将不会返回对应属性
+  async findAll(paginationQuery: PaginationQueryDto) {
+    const { limit, offset } = paginationQuery;
+    // 可以只传递 limit  不能只穿 offset
     return await this.coffeeRepository.find({
+      // 用于指定关系，否则将不会返回对应属性
       relations: ['flavours'],
+      skip: offset,
+      take: limit,
     });
   }
 
