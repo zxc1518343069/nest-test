@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, Index } from 'typeorm';
 
 @Entity()
 export class Event {
@@ -8,6 +8,7 @@ export class Event {
   @Column()
   type: string;
 
+  @Index() // 优化数据库缓存使用的
   @Column()
   name: string;
 
