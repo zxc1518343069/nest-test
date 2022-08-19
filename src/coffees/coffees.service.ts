@@ -1,12 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
-import { Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { CreateCoffeeDto } from './dto/create-coffee.dto';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto';
 import { Coffee } from './entities/coffee.entity';
 import { Flavour } from './entities/flavour.entity';
-
+import { Event } from 'src/events/entities/event.entity';
 @Injectable()
 export class CoffeesService {
   constructor(
@@ -14,6 +14,8 @@ export class CoffeesService {
     private readonly coffeeRepository: Repository<Coffee>,
     @InjectRepository(Flavour)
     private readonly flavorRepository: Repository<Flavour>,
+    @InjectRepository(Event)
+    private readonly connection: DataSource,
   ) {}
 
   async findAll(paginationQuery: PaginationQueryDto) {
@@ -25,6 +27,32 @@ export class CoffeesService {
       skip: offset,
       take: limit,
     });
+  }
+
+  async recommendCoffee(coffee: Coffee) {
+    const queryRunner = this.connection.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+
+    // 新建链接 链接成功 开始交易
+
+    try {
+      coffee.recommendations++;
+      const recommendEvent = new Event();
+      recommendEvent.name = 'recommend_coffee';
+      recommendEvent.type = 'coffee';
+      recommendEvent.payload = { coffeeId: coffee.id };
+
+      // 保存咖啡实体和事件实体
+      await queryRunner.manager.save(coffee);
+      await queryRunner.manager.save(recommendEvent);
+
+      await queryRunner.commitTransaction(); // 提交
+    } catch (err) {
+      await queryRunner.rollbackTransaction(); // 回滚
+    } finally {
+      await queryRunner.release(); // 关闭
+    }
   }
 
   async findOne(id: number) {

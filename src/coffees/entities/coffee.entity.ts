@@ -23,9 +23,8 @@ export class Coffee {
   @Column()
   brand: string;
 
-  // added because we created the Event entity
-  // @Column({ default: 0})
-  // recommendations: number;
+  @Column({ default: 0 })
+  recommendations: number;
 
   // @JoinTable 应用于指定关系，指定这是关系的所有者方 通常放置在主要操作的那个表中
   // https://typeorm.bootcss.com/relations#jointable%E9%80%89%E9%A1%B9
