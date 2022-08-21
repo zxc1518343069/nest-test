@@ -8,6 +8,7 @@ import { Flavour } from './entities/flavour.entity';
 import { Event } from 'src/events/entities/event.entity';
 import { DataSource } from 'typeorm';
 import { DataBaseModule } from 'src/data-base/data-base.module';
+import { ConfigModule } from '@nestjs/config';
 
 class Config {}
 
@@ -26,6 +27,7 @@ export class CoffeeBrandsFactory {
 
 @Module({
   imports: [
+    ConfigModule,
     TypeOrmModule.forFeature([Coffee, Flavour, Event]),
     // 动态模块
     // DataBaseModule.register({
