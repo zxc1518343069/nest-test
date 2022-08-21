@@ -7,7 +7,7 @@ import { UpdateCoffeeDto } from './dto/update-coffee.dto';
 import { Coffee } from './entities/coffee.entity';
 import { Flavour } from './entities/flavour.entity';
 import { Event } from 'src/events/entities/event.entity';
-import { COFFEE_BRANDS } from './coffees.constants';
+import { COFFEE_BRANDS, COFFEE_BRANDS_VALUES } from './const/coffees.constants';
 @Injectable()
 export class CoffeesService {
   constructor(
@@ -16,10 +16,10 @@ export class CoffeesService {
     @InjectRepository(Flavour)
     private readonly flavorRepository: Repository<Flavour>,
     @InjectRepository(Event)
-    private readonly connection: DataSource,
-    @Inject(COFFEE_BRANDS) COFFEE_BRANDS: string[],
+    private readonly connection: DataSource, // @Inject(COFFEE_BRANDS) COFFEE_BRANDS: string[],
+    @Inject(COFFEE_BRANDS) COFFEE_BRAND,
   ) {
-    console.log(COFFEE_BRANDS);
+    console.log(COFFEE_BRAND);
   }
 
   async findAll(paginationQuery: PaginationQueryDto) {

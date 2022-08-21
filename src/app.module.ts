@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { CatsModule } from './cats/cats.module';
 import { CoffeesModule } from './coffees/coffees.module';
 import { CoffeeRatingModule } from './coffee-rating/coffee-rating.module';
+import { DataBaseModule } from './data-base/data-base.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -19,6 +20,7 @@ import { CoffeeRatingModule } from './coffee-rating/coffee-rating.module';
     CatsModule,
     CoffeesModule,
     CoffeeRatingModule,
+    DataBaseModule,
   ],
   controllers: [],
   providers: [],
