@@ -6,6 +6,7 @@ import { CoffeeRatingModule } from './coffee-rating/coffee-rating.module';
 import { DataBaseModule } from './data-base/data-base.module';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
+import appConfig from './config/appConfig';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import * as Joi from 'joi';
         DATABASE_PORT: Joi.number().default(3306),
         DATABASE_USER: Joi.required(),
       }),
+      load: [appConfig],
     }), //默认解析 .env 并把键值对与 process.env 相结合
     TypeOrmModule.forRoot({
       type: 'mysql',

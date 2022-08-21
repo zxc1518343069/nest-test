@@ -22,7 +22,8 @@ export class CoffeesService {
     private readonly config: ConfigService, // @Inject(COFFEE_BRANDS) COFFEE_BRANDS: string[],
   ) {
     const dataBaseHost = this.config.get('DATABASE_HOST', 'default');
-    console.log(dataBaseHost); // 获取env 配置信息
+    const dataBase = this.config.get('database', 'default');
+    console.log(dataBaseHost, dataBase); // 获取env 配置信息
   }
 
   async findAll(paginationQuery: PaginationQueryDto) {
