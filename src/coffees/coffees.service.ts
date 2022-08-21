@@ -8,7 +8,8 @@ import { Coffee } from './entities/coffee.entity';
 import { Flavour } from './entities/flavour.entity';
 import { Event } from 'src/events/entities/event.entity';
 import { COFFEE_BRANDS, COFFEE_BRANDS_VALUES } from './const/coffees.constants';
-import { ConfigService } from '@nestjs/config';
+import { ConfigService, ConfigType } from '@nestjs/config';
+import coffeesConfigFn from './config/config';
 @Injectable()
 export class CoffeesService {
   constructor(
@@ -18,12 +19,15 @@ export class CoffeesService {
     private readonly flavorRepository: Repository<Flavour>,
     @InjectRepository(Event)
     private readonly connection: DataSource, // @Inject(COFFEE_BRANDS) COFFEE_BRANDS: string[],
-    @Inject(COFFEE_BRANDS) COFFEE_BRAND,
+    // @Inject(COFFEE_BRANDS) COFFEE_BRAND,
     private readonly config: ConfigService, // @Inject(COFFEE_BRANDS) COFFEE_BRANDS: string[],
+    @Inject(coffeesConfigFn.KEY)
+    private readonly coffeesConfig: ConfigType<typeof coffeesConfigFn>, // @Inject(COFFEE_BRANDS) COFFEE_BRANDS: string[],
   ) {
     const dataBaseHost = this.config.get('DATABASE_HOST', 'default');
-    const dataBase = this.config.get('database', 'default');
-    console.log(dataBaseHost, dataBase); // 获取env 配置信息
+    const dataBaseHost2 = this.config.get('database.host', 'default');
+    console.log(coffeesConfig); // 可以通过属性的形式拿到 不需要用上述字符串形式
+    console.log(dataBaseHost, dataBaseHost2); // 获取env 配置信息
   }
 
   async findAll(paginationQuery: PaginationQueryDto) {
