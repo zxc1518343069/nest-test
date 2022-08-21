@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, ValidationPipe } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CatsModule } from './cats/cats.module';
 import { CoffeesModule } from './coffees/coffees.module';
@@ -7,6 +7,7 @@ import { DataBaseModule } from './data-base/data-base.module';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
 import appConfig from './config/appConfig';
+import { APP_PIPE } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -50,6 +51,22 @@ import appConfig from './config/appConfig';
     DataBaseModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [
+    // { // 另一种用法
+    //   provide: APP_PIPE,
+    //   useFactory: () =>
+    //     new ValidationPipe({
+    //       whitelist: true, // 排除除了entity的参数
+    //       // forbidNonWhitelisted:true, // 出现其他参数外报错
+    //       transform: true, // 把请求参数 转换成entity 实例
+    //       // 或者把参数转换成想要的类型 比如 id string body设置的number 则转换成number
+    //       // 对 性能有轻微影响
+    //       transformOptions: {
+    //         // https://github.com/typestack/class-transformer 参考
+    //         enableImplicitConversion: true, // 启用隐式类型转换
+    //       },
+    //     }),
+    // },
+  ],
 })
 export class AppModule {}
