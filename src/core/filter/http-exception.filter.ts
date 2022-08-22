@@ -5,6 +5,7 @@ import {
   HttpException,
 } from '@nestjs/common';
 
+//​@Catch​​装饰器可以采用单个参数或逗号分隔的列表，如果需要，允许一次为多种类型的异常设置过滤器
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {
   catch(exception: HttpException, host: ArgumentsHost) {
