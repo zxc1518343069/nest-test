@@ -32,6 +32,7 @@ import { APP_PIPE } from '@nestjs/core';
         DATABASE_PORT: Joi.number().default(3306),
         DATABASE_USER: Joi.required(),
       }),
+      // 加载config
       load: [appConfig],
     }),
     //默认解析 .env 并把键值对与 process.env 相结合 注意顺序要在 configModel 之下
