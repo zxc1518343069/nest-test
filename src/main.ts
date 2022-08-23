@@ -22,7 +22,7 @@ async function bootstrap() {
   );
   app.useGlobalInterceptors(new TransformInterceptor());
   app.useGlobalFilters(new HttpExceptionFilter());
-  app.useGlobalGuards(new ApiKeyGuard());
+  // app.useGlobalGuards(new ApiKeyGuard());
 
   await app.listen(3000);
 }
