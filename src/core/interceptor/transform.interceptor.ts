@@ -4,7 +4,7 @@ import {
   Injectable,
   NestInterceptor,
 } from '@nestjs/common';
-import { Observable, map } from 'rxjs';
+import { Observable, map, timeout, catchError, throwError } from 'rxjs';
 
 // NestInterceptor​​​接口要求在类中提供​​intercept()​​方法
 // ​​intercept()​​​方法应该从​​RxJS​​​库返回一个​​Observable​​
@@ -15,6 +15,11 @@ import { Observable, map } from 'rxjs';
 export class TransformInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     return next.handle().pipe(
+      timeout(3000), // 设置请求过期时间
+      catchError((err) => {
+        // 设置错误信息
+        return throwError(() => new Error(err));
+      }),
       map((data) => {
         return {
           data,

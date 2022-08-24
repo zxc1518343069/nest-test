@@ -26,7 +26,7 @@ export class CoffeesController {
   // @SetMetadata('IS_PUBLIC', true)
   @Public()
   @Get()
-  findAll(@Query() paginationQuery: PaginationQueryDto) {
+  async findAll(@Query() paginationQuery: PaginationQueryDto) {
     return this.coffeeService.findAll(paginationQuery);
   }
 

@@ -19,10 +19,10 @@ export class ApiKeyGuard implements CanActivate {
 
     // 参数 元数据键和用于从中检索元数据的上下文（装饰器目标）。
     const isPublic = this.reflector.get(IS_PUBLIC, context.getHandler());
-    console.log('ctx', context, context.getHandler(), isPublic);
+    // console.log('ctx', context, context.getHandler(), isPublic);
     if (isPublic) return true;
     const authHeader = request.header('Authorization');
-    console.log('guards', authHeader, process.env.API_KEY);
+    // console.log('guards', authHeader, process.env.API_KEY);
     return authHeader === this.configService.get('API_KEY');
     // return authHeader === process.env.API_KEY;
     // return true; // 通过返回值来判断是否让通过
