@@ -15,7 +15,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const status = exception.getStatus(); // 获取异常状态码
 
     const exceptionRes = exception.getResponse();
-    console.log(exceptionRes); // 打印错误信息
+    // console.log(exceptionRes); // 打印错误信息
     // 设置错误信息
     const message = exception.message
       ? exception.message

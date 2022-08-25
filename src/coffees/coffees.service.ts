@@ -26,8 +26,8 @@ export class CoffeesService {
   ) {
     const dataBaseHost = this.config.get('DATABASE_HOST', 'default');
     const dataBaseHost2 = this.config.get('database.host', 'default');
-    console.log(coffeesConfig); // 可以通过属性的形式拿到 不需要用上述字符串形式
-    console.log(dataBaseHost, dataBaseHost2); // 获取env 配置信息
+    // console.log(coffeesConfig); // 可以通过属性的形式拿到 不需要用上述字符串形式
+    // console.log(dataBaseHost, dataBaseHost2); // 获取env 配置信息
   }
 
   async findAll(paginationQuery: PaginationQueryDto) {

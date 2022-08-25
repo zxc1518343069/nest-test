@@ -13,6 +13,7 @@ import {
   Inject,
   SetMetadata,
 } from '@nestjs/common';
+import { Protocol } from 'src/common/decorators/protocol.decorators';
 import { Public } from 'src/common/decorators/public.decorators';
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
 import { CoffeesService } from './coffees.service';
@@ -26,7 +27,11 @@ export class CoffeesController {
   // @SetMetadata('IS_PUBLIC', true)
   @Public()
   @Get()
-  findAll(@Query() paginationQuery: PaginationQueryDto) {
+  findAll(
+    @Protocol('protocol22') protocol: string,
+    @Query() paginationQuery: PaginationQueryDto,
+  ) {
+    console.log('protocol', protocol);
     return this.coffeeService.findAll(paginationQuery);
   }
 
