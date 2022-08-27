@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -9,21 +10,26 @@ import { Flavour } from './flavour.entity';
 
 @Entity() // sql table === 'coffee
 export class Coffee {
+  @ApiProperty({ description: 'id' })
   @PrimaryGeneratedColumn()
   id: number;
 
   // to test out migration, change name => title
+  @ApiProperty({ description: '名字' })
   @Column()
   name: string;
 
   // 参数参考https://typeorm.bootcss.com/entities#%E5%88%97%E9%80%89%E9%A1%B9
+  @ApiProperty({ description: '描述' })
   @Column({ nullable: true })
   description: string;
 
   @Column()
+  @ApiProperty({ description: '品牌' })
   brand: string;
 
   @Column({ default: 0 })
+  @ApiProperty({ description: '推荐次数' })
   recommendations: number;
 
   // @JoinTable 应用于指定关系，指定这是关系的所有者方 通常放置在主要操作的那个表中
@@ -42,5 +48,6 @@ export class Coffee {
   @ManyToMany((type) => Flavour, (flavour) => flavour.coffees, {
     cascade: true,
   })
+  @ApiProperty({ description: '口味' })
   flavours: Flavour[];
 }

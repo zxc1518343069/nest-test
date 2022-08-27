@@ -1,5 +1,6 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { ApiKeyGuard } from './common/guards/api-key.guard';
 import { LoggingMiddleware, log } from './common/middleware/logging.middleware';
@@ -8,6 +9,7 @@ import { TransformInterceptor } from './core/interceptor/transform.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
   // 校验相关 参考https://docs.nestjs.com/techniques/validation#stripping-properties
   app.useGlobalPipes(
     new ValidationPipe({
@@ -25,6 +27,16 @@ async function bootstrap() {
   app.useGlobalInterceptors(new TransformInterceptor());
   app.useGlobalFilters(new HttpExceptionFilter());
   // app.useGlobalGuards(new ApiKeyGuard());
+
+  const config = new DocumentBuilder()
+    .setTitle('Cats example')
+    .setDescription('The cats API description')
+    .setVersion('1.0')
+    .addTag('cats')
+    .addBearerAuth() // https://docs.nestjs.com/openapi/security#bearer-authentication
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document);
 
   await app.listen(3000);
 }

@@ -13,13 +13,15 @@ import {
   Inject,
   SetMetadata,
 } from '@nestjs/common';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Protocol } from 'src/common/decorators/protocol.decorators';
 import { Public } from 'src/common/decorators/public.decorators';
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
 import { CoffeesService } from './coffees.service';
 import { CreateCoffeeDto } from './dto/create-coffee.dto';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto';
-
+import { Coffee } from './entities/coffee.entity';
+@ApiTags('coffees')
 @Controller('coffees')
 export class CoffeesController {
   constructor(private readonly coffeeService: CoffeesService) {}
@@ -27,6 +29,7 @@ export class CoffeesController {
   // @SetMetadata('IS_PUBLIC', true)
   @Public()
   @Get()
+  @ApiOperation({ summary: '得到所有coffees' })
   findAll(
     @Protocol('protocol22') protocol: string,
     @Query() paginationQuery: PaginationQueryDto,
@@ -41,8 +44,7 @@ export class CoffeesController {
   }
 
   @Post()
-  create(@Body() createCoffeeDto: CreateCoffeeDto) {
-    console.log(createCoffeeDto);
+  create(@Body() createCoffeeDto: CreateCoffeeDto): Promise<Coffee> {
     return this.coffeeService.create(createCoffeeDto);
   }
 
